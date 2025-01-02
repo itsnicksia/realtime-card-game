@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Unity.Services.Core;
 using System.Threading.Tasks;
@@ -12,8 +13,9 @@ public class SessionManager : MonoBehaviour
     {
 	    await SignIn();
 
-	    //var joinedSessionIds = await MultiplayerService.Instance.GetJoinedSessionIdsAsync();
-	    //var isAlreadyPartOfSession = joinedSessionIds.Contains(defaultSessionId);
+	    // Does not work on WebGL!
+	    // var joinedSessionIds = await MultiplayerService.Instance.GetJoinedSessionIdsAsync();
+	    // var isAlreadyPartOfSession = joinedSessionIds.Contains(defaultSessionId);
 
 		await CreateOrJoinSession(defaultSessionId);
     }
@@ -38,11 +40,19 @@ public class SessionManager : MonoBehaviour
 	    Debug.Log($"Creating/Joining Session {sessionId}...");
         var options = new SessionOptions
         {
-    	    MaxPlayers = 4
+    	    MaxPlayers = 6
         }.WithRelayNetwork();
 
-        var session = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionId, options);
-        Debug.Log($"Session {session.Id} created! Join code: {session.Code}");
-        return session;
+        try
+        {
+	        var session = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionId, options);
+	        Debug.Log($"Session {session.Id} created! Join code: {session.Code}");
+	        return session;
+        }
+        catch (SessionException e)
+        {
+	        Debug.Log(e.Error.ToString());
+	        return await RejoinSession(sessionId);
+        }
     }
 }
