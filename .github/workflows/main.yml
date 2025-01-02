@@ -2,6 +2,10 @@ name: Build and Deploy
 
 on: [push, pull_request]
 
+defaults:
+  run:
+    working-directory: ./realtime-card-game
+
 jobs:
   build:
     name: Build
@@ -15,7 +19,6 @@ jobs:
 
       # Cache
       - uses: actions/cache@v3
-        working-directory: ./realtime-card-game
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -24,7 +27,6 @@ jobs:
 
       # Build
       - name: Build project
-        working-directory: ./realtime-card-game
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
