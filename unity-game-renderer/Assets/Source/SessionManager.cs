@@ -1,10 +1,8 @@
 using UnityEngine;
 using Unity.Services.Core;
-using System;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Multiplayer;
-using UnityEngine.Serialization;
 
 public class SessionManager : MonoBehaviour
 {
@@ -14,21 +12,18 @@ public class SessionManager : MonoBehaviour
     {
 	    await SignIn();
 
-	    var session = await IsAlreadyPartOfSession(defaultSessionId)
-		    ? await RejoinSession(defaultSessionId)
-			: await CreateOrJoinSession(defaultSessionId);
+	    //var joinedSessionIds = await MultiplayerService.Instance.GetJoinedSessionIdsAsync();
+	    //var isAlreadyPartOfSession = joinedSessionIds.Contains(defaultSessionId);
+
+		await CreateOrJoinSession(defaultSessionId);
     }
 
 	private async Task<ISession> RejoinSession(string sessionId)
 	{
+		Debug.Log($"Rejoining Session {sessionId}...");
 		var session = await MultiplayerService.Instance.ReconnectToSessionAsync(sessionId);
 		Debug.Log($"Session {session.Id} rejoined! Join code: {session.Code}");
 		return session;
-	}
-
-	private async Task<bool> IsAlreadyPartOfSession(string sessionId)
-	{
-		return (await MultiplayerService.Instance.GetJoinedSessionIdsAsync()).Contains(sessionId);
 	}
 
 	private async Task SignIn()
@@ -40,6 +35,7 @@ public class SessionManager : MonoBehaviour
 
     private async Task<ISession> CreateOrJoinSession(string sessionId)
     {
+	    Debug.Log($"Creating/Joining Session {sessionId}...");
         var options = new SessionOptions
         {
     	    MaxPlayers = 4

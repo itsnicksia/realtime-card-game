@@ -28,11 +28,6 @@ resource "aws_route53_record" "cert_validation" {
   ttl     = 60
 }
 
-resource "aws_acm_certificate_validation" "cert_validation" {
-  certificate_arn         = aws_acm_certificate.cloudfront_cert.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
-}
-
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = aws_s3_bucket.website_bucket.bucket_regional_domain_name
@@ -78,4 +73,24 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       restriction_type = "none"
     }
   }
+}
+
+resource "aws_iam_policy" "cloudfront_invalidate_policy" {
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "cloudfront:CreateInvalidation",
+        "Resource": "arn:aws:cloudfront::628602948023:distribution/E31A0AUI49SALI"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy_attachment" "cloudfront_invalidate_attachment" {
+  name       = "card-game-cloudfront-invalidation"
+  users      = [aws_iam_user.s3_sync_user.name]
+  policy_arn = aws_iam_policy.cloudfront_invalidate_policy.arn
 }
