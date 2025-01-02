@@ -13,7 +13,9 @@ terraform {
   }
 }
 
-data "aws_caller_identity" "current" {}
+locals {
+  route53_zone_id = "Z1MO7VGBJ38IIB"
+}
 
 provider "aws" {
   region = "ap-southeast-2"
@@ -119,6 +121,41 @@ resource "aws_s3_object" "error_html_upload" {
   key          = "error.html"
   source       = local_file.error_html.filename
   content_type = "text/html"
+}
+
+resource "aws_route53_record" "s3_alias" {
+  zone_id = local.route53_zone_id
+  name    = "cards.fasterthoughts.io" # Replace with your subdomain or root domain
+  type    = "A"
+
+  alias {
+    name                   = aws_s3_bucket.website_bucket.website_domain
+    zone_id                = aws_s3_bucket.website_bucket.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_iam_user" "s3_sync_user" {
+  name = "s3-sync-user"
+}
+
+resource "aws_iam_policy" "s3_sync_policy" {
+  name        = "s3-sync-policy"
+  description = "Policy to allow S3 sync operations"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = ["s3:PutObject", "s3:ListBucket", "s3:DeleteObject"],
+        Resource = [
+          aws_s3_bucket.website_bucket.arn,
+          "${aws_s3_bucket.website_bucket.arn}/*"
+        ]
+      }
+    ]
+  })
 }
 
 output "bucket_website_endpoint" {
