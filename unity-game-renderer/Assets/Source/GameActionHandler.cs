@@ -10,7 +10,6 @@ namespace Source
 
         protected override void OnNetworkPostSpawn()
         {
-            Debug.Log("boop");
             playerUI.SetActive(true);
             base.OnNetworkPostSpawn();
 
