@@ -8,13 +8,6 @@ namespace Source
         public ServerState serverState;
         public GameObject playerUI;
 
-        protected override void OnNetworkPostSpawn()
-        {
-            playerUI.SetActive(true);
-            base.OnNetworkPostSpawn();
-
-        }
-
         [Rpc(SendTo.Server)]
         public void HurtEnemyRpc(int amount)
         {
