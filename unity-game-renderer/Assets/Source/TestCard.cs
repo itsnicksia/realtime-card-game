@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Source
 {
 
     public class TestCard : MonoBehaviour
     {
-        public GameActionHandler gameActionHandler;
+        [FormerlySerializedAs("playerActionHandler")] [FormerlySerializedAs("gameActionHandler")] public DevModeRpc devModeRpc;
 
         public void Activate()
         {
-            gameActionHandler.HurtEnemyRpc(5);
-            gameActionHandler.HurtEnemyRpc(5);
+            devModeRpc.HurtEnemyRpc(5);
+            devModeRpc.HurtEnemyRpc(5);
         }
     }
 }

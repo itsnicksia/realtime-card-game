@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Source
 {
-    public class GameActionHandler : NetworkBehaviour
+    public class DevModeRpc : NetworkBehaviour
     {
-        public ServerState serverState;
+        public Server serverState;
         public GameObject playerUI;
 
         [Rpc(SendTo.Server)]

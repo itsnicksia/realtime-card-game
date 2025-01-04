@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4b8c86c9e14553b00dcdd608224c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameActionHandler: {fileID: 829330736}
+  devModeRpc: {fileID: 829330736}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,7 +959,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 829330732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ec0514f6c2425c8deab80ec211d439, type: 3}
+  m_Script: {fileID: 11500000, guid: 214cac3b9a2148849aff8a4c0febb029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4b8c86c9e14553b00dcdd608224c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameActionHandler: {fileID: 829330736}
+  devModeRpc: {fileID: 829330736}
 --- !u!1 &1365446318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,7 +2166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14d5f3a49fd0f248a65d8b399379a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverState: {fileID: 829330734}
+  server: {fileID: 829330734}
   textMesh: {fileID: 2070958518}
 --- !u!1 &2106121274
 GameObject:
