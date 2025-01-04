@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3034671821573985907}
   - component: {fileID: 6864188384533004402}
   - component: {fileID: 3122377461788726805}
-  - component: {fileID: 5519912029002141159}
+  - component: {fileID: 7802560772278308036}
   m_Layer: 0
   m_Name: Player Dummy Prefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1653338662
+  GlobalObjectIdHash: 2986151252
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -114,7 +114,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &5519912029002141159
+--- !u!114 &7802560772278308036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5673957290123794589}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7b11fdbad7311428e2e4b05a25a109, type: 3}
+  m_Script: {fileID: 11500000, guid: b052ca7e4ba445a8a3a2355e0756b18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1

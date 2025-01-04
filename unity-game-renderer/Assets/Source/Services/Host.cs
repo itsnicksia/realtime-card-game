@@ -5,22 +5,32 @@ using UnityEngine;
 
 namespace Source
 {
-    public class Server : NetworkBehaviour
+    public class Host : NetworkBehaviour
     {
         public NetworkVariable<int> enemyHp = new(1_000_000);
 
-        private float _timeUntilNextDraw;
+        public float timeUntilNextDraw;
 
         void Update()
         {
-            _timeUntilNextDraw -= NetworkManager.Singleton.LocalTime.FixedDeltaTime;
-            if (HasAuthority && _timeUntilNextDraw <= 0f)
+            if (HasAuthority)
+            {
+                RunServerLogic();
+            }
+
+        }
+
+        private void RunServerLogic()
+        {
+            // FIXME: Move to some kind of network-safe timer.
+            timeUntilNextDraw -= Time.deltaTime;
+            if (timeUntilNextDraw <= 0f)
             {
                 // TODO: Well, each player should draw their own card, based on server authority.
                 GetPlayerStates()
                     .ToList()
                     .ForEach(ps => ps.DrawCard());
-                _timeUntilNextDraw = 5f;
+                timeUntilNextDraw = 5f;
             }
         }
 
