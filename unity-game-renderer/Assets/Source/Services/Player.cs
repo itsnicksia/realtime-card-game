@@ -16,19 +16,22 @@ namespace Source
             card1.OnValueChanged += OnValueChanged;
         }
 
-        private void OnValueChanged(int previousvalue, int newvalue)
-        {
-            Debug.Log($"Drew card: {newvalue}");
-        }
+
 
         public void DrawCard()
         {
             card1.Value = 1;
         }
 
+        private void OnValueChanged(int previousValue, int newValue)
+        {
+            Debug.Log($"Drew card: {newValue}");
+        }
+
         public override void OnNetworkSpawn()
         {
-            GameObject.FindGameObjectWithTag("PlayerUI").SetActive(true);
+            var playerUI = GameObject.FindGameObjectWithTag("PlayerUI").GetComponent<PlayerUI>();
+            playerUI.SetPlayer(this);
             Debug.Log("activating player stuff");
             base.OnNetworkSpawn();
         }
